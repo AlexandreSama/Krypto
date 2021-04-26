@@ -46,25 +46,9 @@ exports.run = async (client, message, args) => {
                                             { name: "Status", value: status.toString()},
                                             { name: "Hobbies", value: hobbies.toString()},
                                         )
-                                        connection.query(`USE ${guildNameNoSpace}`, function(error, results){
-                                            if(error){
-                                                console.log(error)
-                                            }
-                                            if(results){
-                                                connection.query("SELECT idPresentationsChannel FROM settings", function(error, results){
-                                                    if(error){
-                                                        console.log(error)
-                                                    }if(results){
-                                                        let channelPresentationData = JSON.parse(JSON.stringify(results));
-                                                        channelPresentationData.forEach(function(data, index) {
-                                                            let channelPresentation = message.guild.channels.cache.get(data.idPresentationsChannel)
-                                                            channelPresentation.send(exampleEmbed)
-                                                            message.author.send("Parfait, tu peut trouver ta présentation ici : <#" + data.idPresentationsChannel + ">")
-                                                        })
-                                                    }
-                                                })
-                                            }
-                                        })
+                                    let channelPresentation = message.guild.channels.cache.get("833324654687944716")
+                                    channelPresentation.send(exampleEmbed)
+                                    message.author.send("Parfait, tu peut trouver ta présentation ici : <#833324654687944716>")
                                 })
                             })
                         })
