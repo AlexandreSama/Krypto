@@ -55,7 +55,48 @@ exports.run = async (client, message, args) => {
                                                                 message.channel.send("ERREUR ! veuillez contacter le créateur du bot !")
                                                             }
                                                             if(results){
-                                                                message.channel.send("Informations sauvegardés avec succés !")
+                                                                connection.query(`CREATE TABLE mobs (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, nom VARCHAR(100) NOT NULL, skills JSON, pv INT NOT NULL, damage INT NOT NULL, recompense INT NOT NULL)`, function(error, results){
+                                                                    if(error){
+                                                                        message.channel.send("ERREUR ! veuillez contacter le créateur du bot !")
+                                                                    }
+                                                                    if(results){
+                                                                        message.channel.send("Peut-tu me donner le nom du monstre ?").then(res4 => {
+                                                                            res4.channel.awaitMessages(filter, {max:1}).then(collector4 => {
+                                                                                let mobName = collector4.first().content;
+                                                                                message.channel.send("Peut-tu me donner ses skills ? (retourne a la ligne pour chaque attaque)(et fait ca en 1 message stp)").then(res5 => {
+                                                                                    res5.channel.awaitMessages(filter, {max: 1}).then(collector5 => {
+                                                                                        let mobSkills = collector5.first().content;
+                                                                                        let mobSkillsSplit = mobSkills.split(",")
+                                                                                        let mobSkillsJson = JSON.stringify(mobSkillsSplit)
+                                                                                        message.channel.send("Peut-tu me donner son nombre de Point de Vie ? (juste le chiffre stp)").then(res6 => {
+                                                                                            res6.channel.awaitMessages(filter, {max: 1}).then(collector6 => {
+                                                                                                let mobPV = collector6.first().content;
+                                                                                                message.channel.send("Peut-tu me donner son nombre de dégat ? (juste le chiffre stp").then(res7 => {
+                                                                                                    res7.channel.awaitMessages(filter, {max: 1}).then(collector7 => {
+                                                                                                        let mobDamage = collector7.first().content;
+                                                                                                        message.channel.send("Peut-tu me donner les récompenses de loot ? (ex: 14 gold)").then(res8 => {
+                                                                                                            res8.channel.awaitMessages(filter, {max: 1}).then(collector8 => {
+                                                                                                                let mobRecompense = collector8.first().content;
+                                                                                                                connection.query(`INSERT INTO mobs (nom, skills, pv, damage, recompense) VALUES ("${mobName}", "${mobSkillsJson}", "${mobPV}", "${mobDamage}", "${mobRecompense}")`, function(error, results){
+                                                                                                                    if(error){
+                                                                                                                        console.log(error)
+                                                                                                                    }
+                                                                                                                    if(results){
+                                                                                                                        message.channel.send("Bravo, tu a fini de me paramètrer")
+                                                                                                                    }
+                                                                                                                })
+                                                                                                            })
+                                                                                                        })
+                                                                                                    })
+                                                                                                })
+                                                                                            })
+                                                                                        })
+                                                                                    })
+                                                                                })
+                                                                            })
+                                                                        })
+                                                                    }
+                                                                })
                                                             }
                                                         })
                                                     }

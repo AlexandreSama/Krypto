@@ -3,7 +3,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.events = new Discord.Collection();
-//let message = new Discord.Message();
+let message = new Discord.Message();
 const fs = require('fs');
 const { Player } = require("discord-music-player");
 const player = new Player(client, {
@@ -34,6 +34,4 @@ fs.readdir("./Commands/", (err, files) => {
         });
 });
 
-
-client.on('guildMemberRemove')
 client.login(config.token);
