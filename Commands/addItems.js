@@ -52,9 +52,11 @@ exports.run = async (client, message, args) => {
                                                                             connection.query(`INSERT INTO items (name, description, damage, defense, type, sellprice, buyprice) VALUES ("${itemName}", "${itemDescription}", "${responseAttack}", "${responseDefense}", "${itemType}", "${itemSellPrice}", "${itemBuyPrice}")`, function(error, results){
                                                                             if(error){
                                                                                 console.log(error)
+                                                                                connection.destroy()
                                                                             }
                                                                             if(results){
                                                                                 message.author.send("Item bien enregistré !")
+                                                                                connection.destroy()
                                                                             }
                                                                         })
                                                                     })

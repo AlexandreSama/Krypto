@@ -38,9 +38,11 @@ if(!commandfile) return;
         console.log(channelId)
         if(channelId === element.merchandlocationid & message.content === element.merchandActivationPhrase){
           console.log("C'est le bon channel")
+          connection.destroy()
         }
         else{
           console.log("pas le bon channel")
+          connection.destroy()
         }
       });
     }
