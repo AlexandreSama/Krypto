@@ -14,7 +14,8 @@ exports.run = async (client, message, args) => {
     var connection = mysql.createConnection({
         host     : 'localhost',
         user     : 'root',
-        database: guildNameNoSpace
+        database: guildNameNoSpace,
+        bigNumberStrings: true
     });
 
     if(message.member.hasPermission('ADMINISTRATOR')){
