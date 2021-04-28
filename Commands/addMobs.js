@@ -45,9 +45,11 @@ exports.run = async (client, message, args) => {
                                                         connection.query(`INSERT INTO mobs (mobname, moblifepoints, mobattackpoints, mobdefensepoints, mobgoldrecompense) VALUES ("${mobName}", "${mobLifePoints}", "${mobAttackPoints}", "${mobDefensePoints}", "${mobGoldRecompense}")`, function(error, results){
                                                             if(error){
                                                                 console.log(error)
+                                                                connection.destroy();
                                                             }
                                                             if(results){
                                                                 message.author.send("Parfait, ton mob est enregistré !")
+                                                                connection.destroy();
                                                             }
                                                         })
                                                     })

@@ -27,9 +27,11 @@ exports.run = async (client, message, args) => {
                             if(error){
                                 console.log(error)
                                 message.author.send("Vérifie bien que tu a envoyé les id tel que : 165446444846464, 65465464489464, etc...")
+                                connection.destroy();
                             }
                             if(results){
                                 message.author.send("Parfait, les FightZones sont enregistrées !")
+                                connection.destroy();
                             }
                         })
                     });
@@ -38,9 +40,11 @@ exports.run = async (client, message, args) => {
                         if(error){
                             console.log(error)
                             message.author.send("Vérifie bien que tu a envoyé les id tel que : 165446444846464")
+                            connection.destroy();
                         }
                         if(results){
                             message.author.send("Parfait, la FightZone est enregistré !")
+                            connection.destroy();
                         }
                     })
                 }

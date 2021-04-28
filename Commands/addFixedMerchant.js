@@ -45,9 +45,11 @@ exports.run = async (client, message, args) => {
                                                         connection.query(`INSERT INTO merchand (merchandname, merchandlocationid, merchantgold, merchandtypemarchandise, merchandActivationPhrase) VALUES ("${merchandname}", "${merchandlocationid}", "${merchantgold}", "${merchandtypemarchandise}", "${merchandActivationPhrase}")`, function(error, results){
                                                             if(error){
                                                                 console.log(error)
+                                                                connection.destroy();
                                                             }
                                                             if(results){
                                                                 message.author.send("Parfait, ton marchand est enregistré !")
+                                                                connection.destroy();
                                                             }
                                                         })
                                                     })
