@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
                                                         function download(url){
                                                             request.get(url)
                                                                 .on('error', console.error)
-                                                                .pipe(fs.createWriteStream('utils/mobImgs/' + mobName + '.png'));
+                                                                .pipe(fs.createWriteStream('utils/img/mobs/' + mobName + '.png'));
                                                         }
                                                         download(mobImage.attachments.first().url)
                                                         connection.query(`INSERT INTO mobs (mobname, moblifepoints, mobattackpoints, mobdefensepoints, mobgoldrecompense) VALUES ("${mobName}", "${mobLifePoints}", "${mobAttackPoints}", "${mobDefensePoints}", "${mobGoldRecompense}")`, function(error, results){

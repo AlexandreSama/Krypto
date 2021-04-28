@@ -10,6 +10,11 @@ exports.run = async (client, message, args) => {
     message.delete();
     let authorid = message.author.id;
     const filter = message => message.author.id == authorid;
+    function download(url, name){
+        request.get(url)
+            .on('error', console.error)
+            .pipe(fs.createWriteStream('utils/img/merchand/' + name + '.png'));
+    }
 
     var connection = mysql.createConnection({
         host     : 'localhost',
@@ -27,25 +32,25 @@ exports.run = async (client, message, args) => {
                         message.author.send("Ok, quel est son montant d'or actuel ?").then(res3 => {
                             res3.channel.awaitMessages(filter, {max: 1}).then(collector3 => {
                                 let merchantgold = collector3.first().content;
-                                message.author.send("Ok, maintenant je vais te donner le nom de chaque type d'objets présent dans le rp ! Juste après, dit moi ce que vend ce marchant ! (exemple : armes)").then(res4 => {
+                                message.author.send("Ok, est-ce que le marchand vend des Armures, des Armes, des Potions ou du Bric-A-Brac ?").then(res4 => {
                                     res4.channel.awaitMessages(filter, {max: 1}).then(collector4 => {
                                         let merchandtypemarchandise = collector4.first().content;
-                                        message.author.send("Ok pour finir, donne moi une image du marchand").then(res6 => {
-                                            res6.channel.awaitMessages(filter, {max: 1}).then(collector6 => {
-                                                let merchandImage = collector6.first();
-                                                function download(url){
-                                                    request.get(url)
-                                                        .on('error', console.error)
-                                                        .pipe(fs.createWriteStream('utils/merchandImg/' + merchandname + '.png'));
-                                                }
-                                                download(merchandImage.attachments.first().url)
-                                                connection.query(`INSERT INTO merchand (merchandname, merchandlocationid, merchantgold, merchandtypemarchandise) VALUES ("${merchandname}", "${merchandlocationid}", "${merchantgold}", "${merchandtypemarchandise}")`, function(error, results){
-                                                    if(error){
-                                                        console.log(error)
-                                                    }
-                                                    if(results){
-                                                        message.author.send("Parfait, ton marchand est enregistré !")
-                                                    }
+                                        message.author.send("Ok, tu peut me donner le mot clé d'activation du marchand ?").then(res5 => {
+                                            res5.channel.awaitMessages(filter, {max: 1}).then(collector5 => {
+                                                let merchandActivationPhrase = collector5.first().content;
+                                                message.author.send("Ok pour finir, donne moi une image du marchand").then(res6 => {
+                                                    res6.channel.awaitMessages(filter, {max: 1}).then(collector6 => {
+                                                        let merchandImage = collector6.first();
+                                                        download(merchandImage.attachments.first().url, merchandname)
+                                                        connection.query(`INSERT INTO merchand (merchandname, merchandlocationid, merchantgold, merchandtypemarchandise, merchandActivationPhrase) VALUES ("${merchandname}", "${merchandlocationid}", "${merchantgold}", "${merchandtypemarchandise}", "${merchandActivationPhrase}")`, function(error, results){
+                                                            if(error){
+                                                                console.log(error)
+                                                            }
+                                                            if(results){
+                                                                message.author.send("Parfait, ton marchand est enregistré !")
+                                                            }
+                                                        })
+                                                    })
                                                 })
                                             })
                                         })
@@ -60,7 +65,6 @@ exports.run = async (client, message, args) => {
     }else{
         message.author.send("Tu n'est pas administrateur !")
     }
-
 }
 
 exports.config = {
