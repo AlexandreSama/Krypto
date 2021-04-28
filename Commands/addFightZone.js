@@ -53,7 +53,7 @@ exports.run = async (client, message, args) => {
 }
 
 exports.config = {
-    aliases: ['addsz'],
-    name: 'addsz',
-	description: 'Ajoute une safezone de votre choix',
+    aliases: ['addfz'],
+    name: 'addfz',
+	description: 'Ajoute une fightzone de votre choix',
 }
