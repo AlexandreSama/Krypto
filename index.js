@@ -33,4 +33,6 @@ fs.readdir("./Commands/", (err, files) => {
             client.on(eventName, (guild, member, args) => eventFunc.run(client, guild, member, args));
         });
 });
+
+
 client.login(config.token);

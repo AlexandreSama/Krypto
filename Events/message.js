@@ -32,10 +32,7 @@ if(!commandfile) return;
       console.log(error)
     }
     if(results){
-      console.log(results)
       results.forEach((element) => {
-        console.log(element.merchandlocationid)
-        console.log(channelId)
         if(channelId === element.merchandlocationid & message.content === element.merchandActivationPhrase){
           console.log("C'est le bon channel")
           connection.destroy()
